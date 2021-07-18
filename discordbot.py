@@ -3,7 +3,7 @@ from discord.ext import commands
 
 import os
 
-bot = commands.Bot(command_prefix="$")
+bot = commands.Bot(command_prefix="!!")
 token = os.environ['DISCORD_BOT_TOKEN']
 
 if not discord.opus.is_loaded():
@@ -37,24 +37,6 @@ async def leave(ctx):
     await ctx.send("ボイスチャンネルから切断しました。")
 
 
-@bot.command()
-async def play(ctx):
-    """指定された音声ファイルを流します。"""
-    voice_client = ctx.message.guild.voice_client
 
-    if not voice_client:
-        await ctx.send("Botはこのサーバーのボイスチャンネルに参加していません。")
-        return
-
-    if not ctx.message.attachments:
-        await ctx.send("ファイルが添付されていません。")
-        return
-
-    await ctx.message.attachments[0].save("Do it !.mp3")
-
-    ffmpeg_audio_source = discord.FFmpegPCMAudio("Do it !.mp3")
-    voice_client.play(ffmpeg_audio_source)
-
-    await ctx.send("再生しました。")
 
 bot.run(token)
